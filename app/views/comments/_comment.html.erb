@@ -1,0 +1,23 @@
+<!--This partial file start starts '_' is each comment of a message, @message.comments.each do |comment|-->
+<div class="comment">
+  <p class="comment-content"><%= comment.content %></p>
+  <p class="comment-posted-by">Commented by
+    <% if user_signed_in? %>
+      <% if current_user.id == comment.user_id %>
+        you
+      <% else %>
+        <%= comment.user.email %>
+      <% end %>
+    <% else %>
+      <%= comment.user.email %>
+    <% end %>
+    <%= time_ago_in_words(comment.created_at) %> ago</p>
+  <div class="links">
+    <% if user_signed_in? %>
+      <% if current_user.id == comment.user_id %>
+        <%= link_to "Edit", edit_message_comment_path(comment.message, comment) %>
+        <%= link_to "Delete", message_comment_path(comment.message, comment), method: :delete,data: {confirm: "Are you sure?"} %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
